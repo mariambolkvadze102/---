@@ -4,33 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кидбург - Ресторан</title>
+    <!-- Подключаем красивые шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- БАЗОВЫЕ СТИЛИ --- */
+        /* --- БАЗОВЫЕ СТИЛИ (Светлая тема в стиле меню) --- */
         :root {
-            --bg-color: #1a1a24;
-            --panel-bg: #252533;
-            --accent-color: #8a7db8;
-            --accent-hover: #a396d4;
-            --text-color: #e0e0e0;
-            --text-muted: #888;
-            --success-color: #4caf50;
-            --danger-color: #e74c3c;
+            --bg-color: #f9f5ed;          /* Кремовый фон */
+            --panel-bg: #ffffff;          /* Белые карточки */
+            --accent-color: #9e7b56;      /* Теплый коричневый */
+            --accent-hover: #b8956e;      /* Светло-коричневый */
+            --text-color: #4a3b2e;        /* Темно-коричневый текст */
+            --text-muted: #8c7a6b;        /* Приглушенный текст */
+            --border-color: #dcd0c0;      /* Цвет линий */
+            --success-color: #6b8e23;     /* Оливковый для кнопки "Оформить" */
+            --danger-color: #c0392b;      /* Красный для удаления */
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Lato', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
+            background-image: radial-gradient(#e5dac9 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--text-color);
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+        }
+
+        h1, h2, h3, .main-title, .category-title {
+            font-family: 'Playfair Display', serif;
         }
 
         /* --- ЭКРАНЫ --- */
@@ -59,24 +71,29 @@
         }
 
         .main-title {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
             text-align: center;
-            color: var(--accent-color);
+            color: var(--text-color);
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
         .btn-large {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 20px 60px;
-            font-size: 1.5rem;
-            border-radius: 50px;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(138, 125, 184, 0.4);
+            box-shadow: 0 4px 15px rgba(158, 123, 86, 0.3);
             width: 300px;
             text-align: center;
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .btn-large:hover {
@@ -112,18 +129,20 @@
 
         .table-btn {
             background-color: var(--panel-bg);
-            border: 2px solid var(--accent-color);
+            border: 2px solid var(--border-color);
             color: var(--text-color);
             padding: 20px;
             font-size: 1.2rem;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
             transition: 0.2s;
+            font-weight: bold;
         }
 
         .table-btn:hover {
             background-color: var(--accent-color);
             color: white;
+            border-color: var(--accent-color);
         }
 
         /* --- ЭКРАН 3: МЕНЮ --- */
@@ -137,7 +156,7 @@
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .back-btn {
@@ -149,6 +168,9 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-family: 'Lato', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .menu-content {
@@ -158,29 +180,37 @@
         }
 
         .category-title {
-            font-size: 1.4rem;
-            color: var(--accent-color);
-            margin: 25px 0 15px 0;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin: 40px 0 20px 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0;
         }
 
         .dish-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background-color: var(--panel-bg);
-            border-radius: 10px;
-            margin-bottom: 10px;
+            padding: 15px 10px;
+            border-bottom: 1px dashed var(--border-color);
             cursor: pointer;
             transition: 0.2s;
-            border: 1px solid transparent;
+            background-color: transparent;
         }
 
         .dish-item:hover {
-            border-color: var(--accent-color);
-            transform: translateX(5px);
+            background-color: #fffbf5;
         }
 
         .dish-info {
@@ -189,23 +219,27 @@
         }
 
         .dish-name {
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--text-color);
         }
 
         .dish-desc {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             margin-top: 4px;
             max-width: 600px;
+            font-family: 'Lato', sans-serif;
         }
 
         .dish-price {
-            font-weight: bold;
+            font-weight: 700;
             color: var(--accent-color);
             font-size: 1.2rem;
             white-space: nowrap;
             margin-left: 20px;
+            font-family: 'Playfair Display', serif;
         }
 
         /* --- ЭКРАН 4: ИСТОРИЯ ЗАКАЗОВ --- */
@@ -245,21 +279,22 @@
         }
 
         .history-card {
-            background-color: #e0e0e0;
-            color: #1a1a24;
-            border-radius: 15px;
+            background-color: var(--panel-bg);
+            color: var(--text-color);
+            border-radius: 12px;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: 0.2s;
             position: relative;
+            border: 1px solid var(--border-color);
         }
 
         .history-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
         .history-card-header {
@@ -267,9 +302,10 @@
             justify-content: space-between;
             font-weight: bold;
             font-size: 1.2rem;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
             padding-right: 30px;
+            font-family: 'Playfair Display', serif;
         }
 
         .history-card-table {
@@ -278,7 +314,8 @@
 
         .history-card-date {
             font-size: 0.8rem;
-            color: #666;
+            color: var(--text-muted);
+            font-family: 'Lato', sans-serif;
         }
 
         .delete-order-btn {
@@ -287,7 +324,7 @@
             right: 15px;
             background: none;
             border: none;
-            color: #999;
+            color: #ccc;
             font-size: 1.5rem;
             line-height: 1;
             cursor: pointer;
@@ -298,7 +335,7 @@
 
         .delete-order-btn:hover {
             color: var(--danger-color);
-            background-color: rgba(231, 76, 60, 0.1);
+            background-color: rgba(192, 57, 43, 0.1);
         }
 
         .history-card-items {
@@ -316,18 +353,19 @@
 
         .history-card-note {
             font-size: 0.8rem;
-            color: #d35400;
+            color: var(--accent-color);
             font-style: italic;
             margin-left: 10px;
         }
 
         .history-card-total {
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-align: right;
-            border-top: 1px solid #ccc;
+            border-top: 1px solid var(--border-color);
             padding-top: 10px;
             color: var(--accent-color);
+            font-family: 'Playfair Display', serif;
         }
 
         /* --- КОРЗИНА --- */
@@ -341,7 +379,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            border-top: 1px solid var(--border-color);
             transform: translateY(100%);
             transition: transform 0.3s ease;
             z-index: 100;
@@ -352,7 +391,8 @@
         }
 
         .cart-info {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            color: var(--text-color);
         }
 
         .cart-info span {
@@ -366,7 +406,7 @@
         }
 
         .btn-view {
-            background-color: var(--panel-bg);
+            background-color: transparent;
             color: var(--accent-color);
             border: 1px solid var(--accent-color);
             padding: 12px 20px;
@@ -401,7 +441,7 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(74, 59, 46, 0.6);
             display: none;
             justify-content: center;
             align-items: center;
@@ -418,12 +458,12 @@
             width: 90%;
             max-width: 600px;
             max-height: 80vh;
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 25px;
             display: flex;
             flex-direction: column;
-            border: 1px solid var(--accent-color);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             animation: slideUp 0.3s ease;
         }
 
@@ -438,12 +478,13 @@
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .modal-title {
             font-size: 1.5rem;
-            color: var(--accent-color);
+            color: var(--text-color);
+            font-family: 'Playfair Display', serif;
         }
 
         .close-btn {
@@ -474,6 +515,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            border: 1px solid var(--border-color);
         }
 
         .order-item-header {
@@ -486,12 +528,14 @@
             font-weight: bold;
             font-size: 1.1rem;
             flex: 1;
+            font-family: 'Playfair Display', serif;
         }
 
         .order-item-price {
             color: var(--accent-color);
             font-weight: bold;
             margin-left: 10px;
+            font-family: 'Playfair Display', serif;
         }
 
         .order-item-controls {
@@ -502,9 +546,9 @@
         }
 
         .qty-btn {
-            background: #333;
+            background: #eaddcd;
             border: none;
-            color: white;
+            color: var(--text-color);
             width: 30px;
             height: 30px;
             border-radius: 5px;
@@ -517,6 +561,7 @@
 
         .qty-btn:hover {
             background: var(--accent-color);
+            color: white;
         }
 
         .qty-display {
@@ -527,8 +572,8 @@
 
         .note-input {
             width: 100%;
-            background: #1a1a24;
-            border: 1px solid #444;
+            background: #fdfbf7;
+            border: 1px solid var(--border-color);
             color: var(--text-color);
             padding: 8px 12px;
             border-radius: 8px;
@@ -542,7 +587,7 @@
         }
 
         .note-input::placeholder {
-            color: #666;
+            color: #b0a090;
         }
 
         .modal-footer {
@@ -550,12 +595,13 @@
             justify-content: space-between;
             align-items: center;
             padding-top: 15px;
-            border-top: 1px solid #333;
+            border-top: 1px solid var(--border-color);
         }
 
         .modal-total {
             font-size: 1.3rem;
             font-weight: bold;
+            font-family: 'Playfair Display', serif;
         }
 
         .modal-total span {
@@ -571,7 +617,7 @@
                 display: none;
             }
             .main-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .cart-bar {
                 flex-direction: column;
@@ -599,15 +645,15 @@
 
     <!-- ЭКРАН 1: ГЛАВНАЯ -->
     <div id="screen-main" class="screen active">
-        <h1 class="main-title">Добро пожаловать в Ресторан</h1>
+        <h1 class="main-title">Добро пожаловать<br>в Ресторан</h1>
         <button class="btn-large" onclick="startOrder()">Новый заказ</button>
         <button class="btn-large btn-secondary" onclick="showHistory()">Заказы</button>
     </div>
 
     <!-- ЭКРАН 2: ВЫБОР СТОЛИКА -->
     <div id="screen-tables" class="screen">
-        <h2 style="color: var(--accent-color); margin-bottom: 10px;">Выберите столик</h2>
-        <p style="color: var(--text-muted);">Доступно 28 столиков</p>
+        <h2 style="color: var(--accent-color); margin-bottom: 10px; font-family: 'Playfair Display', serif; font-size: 2rem;">Выберите столик</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem;">Доступно 28 столиков</p>
         <div class="tables-grid" id="tables-container"></div>
     </div>
 
@@ -615,7 +661,7 @@
     <div id="screen-menu" class="screen">
         <div class="menu-header">
             <button class="back-btn" onclick="goToTables()">← Назад к столикам</button>
-            <div>Столик: <span id="current-table-display" style="color: var(--accent-color); font-weight: bold;">-</span></div>
+            <div style="font-family: 'Playfair Display', serif;">Столик: <span id="current-table-display" style="color: var(--accent-color); font-weight: bold; font-size: 1.2rem;">-</span></div>
         </div>
         <div class="menu-content" id="menu-container"></div>
     </div>
@@ -624,7 +670,7 @@
     <div id="screen-history" class="screen">
         <div class="menu-header">
             <button class="back-btn" onclick="showScreen('screen-main')">← На главную</button>
-            <h2 style="color: var(--accent-color);">История заказов</h2>
+            <h2 style="color: var(--text-color); font-family: 'Playfair Display', serif;">История заказов</h2>
             <div style="width: 150px;"></div>
         </div>
         
@@ -662,7 +708,7 @@
     </div>
 
     <script>
-        // --- ОБНОВЛЕННЫЕ ДАННЫЕ МЕНЮ (С ваших скриншотов) ---
+        // --- ОБНОВЛЕННЫЕ ДАННЫЕ МЕНЮ (Добавлены СТРИТ-ФУД и ГОРЯЧИЕ БЛЮДА) ---
         const menuData = [
             { category: "САЛАТЫ", items: [
                 { name: "Салат Капрезе с соусом песто", price: 520, desc: "песто, моцарелла, свежие томаты, базилик, оливковое масло, бальзамический крем" },
@@ -683,6 +729,18 @@
             { category: "ФОКАЧЧА", items: [
                 { name: "Фокачча с пармезаном", price: 360, desc: "" },
                 { name: "Фокачча с чесноком и розмарином", price: 360, desc: "" }
+            ]},
+            { category: "СТРИТ-ФУД", items: [
+                { name: "Картофель фри маленький", price: 290, desc: "" },
+                { name: "Картофель фри большой", price: 450, desc: "" },
+                { name: "Наггетсы куриные маленькие", price: 390, desc: "" },
+                { name: "Наггетсы куриные большие", price: 650, desc: "" },
+                { name: "Сырные палочки с клюквенным соусом", price: 460, desc: "" },
+                { name: "Куриные крылья с соусом блючиз", price: 580, desc: "" },
+                { name: "Кольца кальмара с соусом тар-тар", price: 490, desc: "" },
+                { name: "Гренки чесночные с сырным соусом", price: 390, desc: "" },
+                { name: "Картофель по-деревенски (айдахо)", price: 320, desc: "" },
+                { name: "Хлебная корзина", price: 290, desc: "" }
             ]},
             { category: "ГОРЯЧИЕ ЗАКУСКИ", items: [
                 { name: "Крылья в соусе BBQ", price: 650, desc: "" },
@@ -715,14 +773,18 @@
                 { name: "Жареная форель с брокколи, помидорами черри и сливочным соусом", price: 1100, desc: "" },
                 { name: "Куриное филе в панировке по-милански с картофельным пюре", price: 600, desc: "" },
                 { name: "Жареное филе индейки в соусе терияки с овощами гриль", price: 730, desc: "" },
-                { name: "Рубленый стейк, руккола, чеддер, пармезан", price: 890, desc: "" }
+                { name: "Рубленый стейк, руккола, чеддер, пармезан", price: 890, desc: "" },
+                // Новые блюда из фото
+                { name: "Котлета куриная с картофельным пюре", price: 490, desc: "" },
+                { name: "Мамины пельмешки", price: 390, desc: "" },
+                { name: "Шашлычок куриный детский", price: 400, desc: "" }
             ]},
             { category: "ДЕСЕРТЫ", items: [
                 { name: "Тирамису", price: 460, desc: "" },
                 { name: "Панна-котта", price: 310, desc: "" },
                 { name: "Шоколадный фондан с мороженым на выбор", price: 490, desc: "" },
                 { name: "Яблочный штрудель с мороженым на выбор", price: 490, desc: "" },
-                { name: "Мороженое шарик", price: 180, desc: "" }
+                { name: "Мороженое мяки", price: 180, desc: "" }
             ]}
         ];
 
@@ -805,7 +867,7 @@
             updateCartUI();
             
             const cartBar = document.getElementById('cart-bar');
-            cartBar.style.backgroundColor = '#3a3a4a';
+            cartBar.style.backgroundColor = '#fff5e6';
             setTimeout(() => cartBar.style.backgroundColor = '', 150);
 
             if (document.getElementById('order-modal').classList.contains('active')) {
@@ -842,7 +904,7 @@
             let total = 0;
 
             if (Object.keys(cart).length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#888; margin-top:20px;">Корзина пуста</p>';
+                container.innerHTML = '<p style="text-align:center; color:#8c7a6b; margin-top:20px;">Корзина пуста</p>';
                 document.getElementById('modal-total-price').textContent = '0';
                 return;
             }
@@ -863,7 +925,7 @@
                         <button class="qty-btn" onclick="changeQty('${name}', -1)">-</button>
                         <div class="qty-display">${item.qty}</div>
                         <button class="qty-btn" onclick="changeQty('${name}', 1)">+</button>
-                        <button class="qty-btn" style="background:var(--danger-color); margin-left:auto;" onclick="removeItem('${name}')">×</button>
+                        <button class="qty-btn" style="background:var(--danger-color); color:white; margin-left:auto;" onclick="removeItem('${name}')">×</button>
                     </div>
                     <input type="text" class="note-input" placeholder="Заметка (например: без лука)" 
                            value="${item.note}" 
@@ -946,7 +1008,7 @@
             container.innerHTML = '';
 
             if (orderHistory.length === 0) {
-                container.innerHTML = '<p style="color: #888; grid-column: 1/-1; text-align: center; margin-top: 50px;">История заказов пуста</p>';
+                container.innerHTML = '<p style="color: #8c7a6b; grid-column: 1/-1; text-align: center; margin-top: 50px;">История заказов пуста</p>';
                 return;
             }
 
