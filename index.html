@@ -232,6 +232,12 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
 .order-item{
   background:var(--panel);border:1px solid var(--line);border-radius:14px;
   padding:12px 14px;margin-bottom:10px;display:flex;flex-direction:column;gap:10px;
+  /* Добавил линию снизу для визуального отделения новых продуктов */
+  border-bottom: 2px solid var(--line); 
+}
+/* Если позиция последняя, убираем линию */
+.order-item:last-child {
+  border-bottom: 1px solid var(--line);
 }
 .oi-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .oi-name{font-family:'Playfair Display',serif;font-weight:600;font-size:1rem;flex:1}
@@ -286,8 +292,9 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
 .hist-card{
   background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
   padding:16px;position:relative;box-shadow:var(--shadow-sm);transition:.2s;
+  cursor: pointer; /* Делаем карточку кликабельной */
 }
-.hist-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.hist-card:hover{transform:translateY(-3px);box-shadow:var(--shadow); border-color: var(--gold);}
 .hist-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:10px;margin-bottom:10px;padding-right:34px}
 .hist-table{font-family:'Playfair Display',serif;font-weight:700;color:var(--green);font-size:1.05rem}
 .hist-date{font-size:.72rem;color:var(--muted)}
@@ -298,6 +305,7 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
 .del-x{
   position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:9px;
   border:none;background:transparent;color:#c9c2b4;font-size:1.4rem;line-height:1;cursor:pointer;
+  z-index: 2;
 }
 .del-x:hover{color:var(--danger);background:rgba(192,57,43,.1)}
 
@@ -879,13 +887,20 @@ function renderHistory(){
   orderHistory.forEach(o=>{
     const card = document.createElement('div');
     card.className='hist-card';
+    // Делаем карточку кликабельной для продолжения заказа
+    card.onclick = (e) => {
+      // Если кликнули по крестику удаления, не продолжаем заказ
+      if (e.target.classList.contains('del-x')) return;
+      loadOrderToCart(o);
+    };
+
     let items = '';
     o.items.forEach(it=>{
       items += `<div class="hist-row"><span>${it.name} ×${it.qty}</span><span>${it.price*it.qty} ₽</span></div>`;
       if(it.note) items += `<div class="hist-note">📝 ${it.note}</div>`;
     });
     card.innerHTML = `
-      <button class="del-x" onclick="deleteOrder(${o.id})" title="Удалить">×</button>
+      <button class="del-x" onclick="deleteOrder(event, ${o.id})" title="Удалить">×</button>
       <div class="hist-head">
         <span class="hist-table">Столик №${o.table}</span>
         <span class="hist-date">${o.date}</span>
@@ -897,7 +912,36 @@ function renderHistory(){
   });
 }
 
-function deleteOrder(id){
+// Восстановление заказа из истории
+function loadOrderToCart(order){
+  // Очищаем текущую корзину, чтобы загрузить заказ из истории
+  cart = {};
+  
+  // Переносим товары из истории в корзину
+  order.items.forEach(item => {
+    cart[item.name] = {
+      price: item.price,
+      qty: item.qty,
+      note: item.note || ""
+    };
+  });
+
+  // Устанавливаем текущий столик из заказа
+  currentTable = order.table;
+  
+  // Переходим в меню этого столика
+  document.getElementById('current-table-display').textContent = currentTable;
+  document.getElementById('modal-table-num').textContent = currentTable;
+  
+  currentCategory = 'Все';
+  renderCategoryFilters();
+  renderMenu();
+  updateCartUI();
+  showScreen('screen-menu');
+}
+
+function deleteOrder(e, id){
+  e.stopPropagation(); // Останавливаем всплытие, чтобы не открылся заказ
   if(!confirm('Удалить этот заказ из истории?')) return;
   orderHistory = orderHistory.filter(o=>o.id!==id);
   localStorage.setItem('restaurantOrders', JSON.stringify(orderHistory));
